@@ -11,6 +11,8 @@
       <e p="bin" t="ExcludeRecursive" />
       <e p="Connection.cs" t="Include" />
       <e p="Controllers" t="Include">
+        <e p="Desk.cs" t="Include" />
+        <e p="EnterDesk.cs" t="Include" />
         <e p="Login.cs" t="Include" />
         <e p="Register.cs" t="Include" />
       </e>
