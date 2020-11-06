@@ -17,7 +17,7 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public String Post(string uid, string password)
+        public String Post([FromForm] string uid, [FromForm] string password)
         {
             var connection = Connection.GetConn();
             var Sql = "insert into User (uid,password) values (@uid,@password)";

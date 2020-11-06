@@ -17,19 +17,29 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public String Post(String uid, String password, int desk, int seat, String attribute)
+        public string Post([FromForm] string uid, [FromForm] string password, [FromForm] int desk, [FromForm] int seat,
+            [FromForm] string attribute)
         {
             var connection = Connection.GetConn();
             var sql = "select * from User where uid=@uid and password=@password";
             MySqlCommand command = new MySqlCommand(sql, connection);
             command.Parameters.Add(new MySqlParameter("@uid", uid));
             command.Parameters.Add(new MySqlParameter("@password", password));
-
             connection.Open();
             var result = command.ExecuteReader();
             if (result.HasRows)
             {
                 result.Close();
+                sql = "select * from Desk where player1=@player1 or player2=@player2";
+                command = new MySqlCommand(sql, connection);
+                command.Parameters.Add(new MySqlParameter("@player1", uid));
+                command.Parameters.Add(new MySqlParameter("@player2", uid));
+                result = command.ExecuteReader();
+                if (result.HasRows)
+                {
+                    result.Close();
+                    return "AS";//Already sit
+                }
                 if (attribute.Equals("sitdown"))
                 {
                     sql = seat == 1
