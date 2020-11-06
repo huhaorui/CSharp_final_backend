@@ -14,7 +14,9 @@
         <e p="Desk.cs" t="Include" />
         <e p="EnterDesk.cs" t="Include" />
         <e p="Login.cs" t="Include" />
+        <e p="Ready.cs" t="Include" />
         <e p="Register.cs" t="Include" />
+        <e p="Status.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive">
         <e p="Debug" t="Include">
