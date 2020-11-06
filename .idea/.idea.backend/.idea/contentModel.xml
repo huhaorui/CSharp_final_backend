@@ -9,9 +9,10 @@
       <e p="backend.csproj" t="IncludeRecursive" />
       <e p="backend.sln" t="IncludeFlat" />
       <e p="bin" t="ExcludeRecursive" />
+      <e p="Connection.cs" t="Include" />
       <e p="Controllers" t="Include">
-        <e p="SignInController.cs" t="Include" />
-        <e p="SignUpController.cs" t="Include" />
+        <e p="Login.cs" t="Include" />
+        <e p="Register.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive">
         <e p="Debug" t="Include">
