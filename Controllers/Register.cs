@@ -25,9 +25,17 @@ namespace backend.Controllers
             command.Parameters.Add(new MySqlParameter("@uid", uid));
             command.Parameters.Add(new MySqlParameter("@password", password));
             connection.Open();
-            command.ExecuteNonQuery();
-            connection.Close();
-            return "OK";
+            if (command.ExecuteNonQuery()==1)
+            {
+                connection.Close();
+                return "OK";
+            }
+            else
+            {
+                connection.Close();
+                return "NOK";
+            }
+            
         }
     }
 }

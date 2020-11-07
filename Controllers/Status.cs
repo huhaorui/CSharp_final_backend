@@ -87,6 +87,7 @@ namespace backend.Controllers
             var response = "";
             if (result.Read())
             {
+                var did = result.GetString("did");
                 var gid = result.GetString("gid");
                 var s = result.GetString("status");
                 response += result.GetInt32("did");
@@ -100,6 +101,10 @@ namespace backend.Controllers
                 if (Win(s) != 0)
                 {
                     result.Close();
+                    sql = "update Desk set ready='00' where did=@did";
+                    command=new MySqlCommand(sql,connection);
+                    command.Parameters.Add(new MySqlParameter("@did", did));
+                    command.ExecuteNonQuery();
                     Thread.Sleep(3000);
                     sql = "update Game set status='000000000',next=@next where gid=@gid";
                     command = new MySqlCommand(sql, connection);
