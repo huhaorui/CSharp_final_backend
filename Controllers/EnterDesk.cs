@@ -35,11 +35,10 @@ namespace backend.Controllers
                 command.Parameters.Add(new MySqlParameter("@player1", uid));
                 command.Parameters.Add(new MySqlParameter("@player2", uid));
                 result = command.ExecuteReader();
-                if (result.HasRows)
-                {
-                    result.Close();
+                if (result.HasRows){
                     return "AS";//Already sit
                 }
+                result.Close();
                 if (attribute.Equals("sitdown"))
                 {
                     sql = seat == 1
@@ -60,6 +59,7 @@ namespace backend.Controllers
 
                 if (command.ExecuteNonQuery() == 1)
                 {
+                    
                     return "OK";
                 }
                 else

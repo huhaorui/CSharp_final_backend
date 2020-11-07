@@ -43,17 +43,38 @@ namespace backend.Controllers
                 result = command.ExecuteReader();
                 if (result.Read())
                 {
+                    int player1 = 0, player2 = 0;
+
+                    try
+                    {
+                        player1 = result.GetInt32("player1");
+                    }
+                    catch (System.Data.SqlTypes.SqlNullValueException e)
+                    {
+                    }
+
+                    try
+                    {
+                        player2 = result.GetInt32("player2");
+                    }
+                    catch (System.Data.SqlTypes.SqlNullValueException e)
+                    {
+                    }
+
+                    var ready = result.GetString("ready");
+
                     Sql = "update Desk set ready=@ready where did=@did";
                     command = new MySqlCommand(Sql, connection);
                     command.Parameters.Add(new MySqlParameter("@did", did));
-                    if (uid.Equals(result.GetInt32("player1").ToString()))
+                    if (uid.Equals(player1.ToString()))
                     {
-                        command.Parameters.Add(new MySqlParameter("@ready", cmd + result.GetString("ready")[1]));
+                        command.Parameters.Add(new MySqlParameter("@ready", cmd + ready[1]));
                     }
-                    else if (uid.Equals(result.GetInt32("player2").ToString()))
+                    else if (uid.Equals(player2.ToString()))
                     {
-                        command.Parameters.Add(new MySqlParameter("@ready", result.GetString("ready")[0] + cmd));
+                        command.Parameters.Add(new MySqlParameter("@ready", ready[0] + cmd));
                     }
+
                     result.Close();
                     command.ExecuteNonQuery();
                     return "OK";

@@ -17,11 +17,11 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public String Post([FromForm] string uid ,[FromForm] string password)
+        public string Post([FromForm] string uid ,[FromForm] string password)
         {
             var connection = Connection.GetConn();
-            var Sql = "select * from User where uid=@uid and password=@password";
-            MySqlCommand command = new MySqlCommand(Sql, connection);
+            const string sql = "select * from User where uid=@uid and password=@password";
+            var command = new MySqlCommand(sql, connection);
             command.Parameters.Add(new MySqlParameter("@uid", uid));
             command.Parameters.Add(new MySqlParameter("@password", password));
             connection.Open();
