@@ -35,7 +35,7 @@ namespace backend.Controllers
                 command.Parameters.Add(new MySqlParameter("@player1", uid));
                 command.Parameters.Add(new MySqlParameter("@player2", uid));
                 result = command.ExecuteReader();
-                if (result.HasRows){
+                if (result.HasRows && attribute.Equals("sitdown")){
                     return "AS";//Already sit
                 }
                 result.Close();
