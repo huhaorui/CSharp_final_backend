@@ -51,8 +51,8 @@ namespace backend.Controllers
                 else
                 {
                     sql = seat == 1
-                        ? "update Desk set player1=null where player1=@uid"
-                        : "update Desk set player2=null where player2=@uid";
+                        ? "update Desk set player1='' where player1=@uid"
+                        : "update Desk set player2='' where player2=@uid";
                     command = new MySqlCommand(sql, connection);
                     command.Parameters.Add(new MySqlParameter("@uid", uid));
                 }

@@ -90,19 +90,51 @@ namespace backend.Controllers
                 var did = result.GetString("did");
                 var gid = result.GetString("gid");
                 var s = result.GetString("status");
-                response += result.GetInt32("did");
+                response += result.GetInt32("did"); //0
                 response += ":";
-                response += result.GetString("status");
+                response += result.GetString("status"); //1
                 response += ":";
-                response += result.GetInt32("next");
+                response += result.GetInt32("next"); //2
                 response += ":";
-                response += result.GetString("ready");
-                response += ":";
+                response += result.GetString("ready"); //3
+                result.Close();
+                sql = "select player1,player2 from Desk where did=@did";
+                command = new MySqlCommand(sql, connection);
+                command.Parameters.Add(new MySqlParameter("@did", did));
+                result = command.ExecuteReader();
+                result.Read();
+                string  player = result.GetString("player1"), 
+                    player2 = result.GetString("player2");
+                result.Close();
+                int score1 = 0, score2 = 0;
+                if (!player.Equals(""))
+                {
+                    sql = "select score from User where uid=@uid";
+                    command = new MySqlCommand(sql, connection);
+                    command.Parameters.Add(new MySqlParameter("@uid", player));
+                    result = command.ExecuteReader();
+                    result.Read();
+                    score1 = result.GetInt32("score");
+                    result.Close();
+                }
+
+                if (!player2.Equals(""))
+                {
+                    sql = "select score from User where uid=@uid";
+                    command = new MySqlCommand(sql, connection);
+                    command.Parameters.Add(new MySqlParameter("@uid", player2));
+                    result = command.ExecuteReader();
+                    result.Read();
+                    score2 = result.GetInt32("score");
+                    result.Close();
+                }
+
+                response += ":" + player + ":" + player2 + ":" + score1 + ":" + score2;
                 if (Win(s) != 0)
                 {
                     result.Close();
                     sql = "update Desk set ready='00' where did=@did";
-                    command=new MySqlCommand(sql,connection);
+                    command = new MySqlCommand(sql, connection);
                     command.Parameters.Add(new MySqlParameter("@did", did));
                     command.ExecuteNonQuery();
                     Thread.Sleep(3000);
@@ -119,11 +151,11 @@ namespace backend.Controllers
                     }
                     else if (Win(s) == seat)
                     {
-                        command.Parameters.Add(new MySqlParameter("@score", -3));
+                        command.Parameters.Add(new MySqlParameter("@score", 3));
                     }
                     else
                     {
-                        command.Parameters.Add(new MySqlParameter("@score", 3));
+                        command.Parameters.Add(new MySqlParameter("@score", -3));
                     }
 
                     command.Parameters.Add(new MySqlParameter("@uid", uid));

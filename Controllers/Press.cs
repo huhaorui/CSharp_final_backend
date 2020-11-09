@@ -18,7 +18,7 @@ namespace backend.Controllers
 
         [HttpPost]
         public string Post([FromForm] string uid, [FromForm] string password, [FromForm] int key)
-        {
+        {    
             //TODO 邪恶用户尝试修改key，以及不在自己回合进行操作
             var connection = Connection.GetConn();
             var sql = "select status,next,gid from AllView where uid=@uid and password=@password";

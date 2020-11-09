@@ -43,11 +43,11 @@ namespace backend.Controllers
                 result = command.ExecuteReader();
                 if (result.Read())
                 {
-                    int player1 = 0, player2 = 0;
+                    string player1 = "0", player2 = "0";
 
                     try
                     {
-                        player1 = result.GetInt32("player1");
+                        player1 = result.GetString("player1");
                     }
                     catch (System.Data.SqlTypes.SqlNullValueException e)
                     {
@@ -55,7 +55,7 @@ namespace backend.Controllers
 
                     try
                     {
-                        player2 = result.GetInt32("player2");
+                        player2 = result.GetString("player2");
                     }
                     catch (System.Data.SqlTypes.SqlNullValueException e)
                     {

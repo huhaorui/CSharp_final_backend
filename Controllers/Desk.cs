@@ -27,15 +27,20 @@ namespace backend.Controllers
             var response = "";
             while (result.Read())
             {
-                int did = 0, player1 = 0, player2 = 0, gid = 0;
+                int did = 0, gid = 0;
+                string player1 = "0", player2 = "0";
                 if (!result.IsDBNull(0))
                     did = result.GetInt32("did");
                 if (!result.IsDBNull(1))
-                    player1 = result.GetInt32("player1");
+                    player1 = result.GetString("player1");
                 if (!result.IsDBNull(2))
-                    player2 = result.GetInt32("player2");
+                    player2 = result.GetString("player2");
                 if (!result.IsDBNull(3))
                     gid = result.GetInt32("gid");
+                if (player1 == "")
+                    player1 = "0";
+                if (player2 == "")
+                    player2 = "0";
                 response += $"{did} {player1} {player2} {gid}\n";
             }
 
